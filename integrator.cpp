@@ -15,7 +15,6 @@ namespace fst
         {
             return math::Vector3f(0.0f, 0.0f, 0.0f);
         }
-
         HitRecord hit_record;
         auto result = m_scene.intersect(ray, hit_record, std::numeric_limits<float>::max());
 

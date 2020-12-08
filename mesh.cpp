@@ -28,7 +28,7 @@ namespace fst
 		hit_record.material_id = m_material_id;
             }
         }
-
+    
         return min_distance != max_distance;
     }
 

@@ -1,3 +1,5 @@
+#include <iostream>
+#include "sphere.h"
 #include "scene.h"
 
 namespace fst
@@ -69,7 +71,9 @@ namespace fst
                 triangles.push_back(Triangle(
                     vertex_data[face.v0_id - 1],
                     vertex_data[face.v1_id - 1] - vertex_data[face.v0_id - 1],
-                    vertex_data[face.v2_id - 1] - vertex_data[face.v0_id - 1]));
+                    vertex_data[face.v2_id - 1] - vertex_data[face.v0_id - 1],
+                    mesh.transformations,
+                    mesh.texture_id));
             }
 
             meshes.push_back(Mesh(std::move(triangles), mesh.material_id));
@@ -78,11 +82,13 @@ namespace fst
         for (auto& triangle : parser.triangles)
         {
             std::vector<Triangle> triangles;
-
             triangles.push_back(Triangle(
                 vertex_data[triangle.indices.v0_id - 1],
                 vertex_data[triangle.indices.v1_id - 1] - vertex_data[triangle.indices.v0_id - 1],
-                vertex_data[triangle.indices.v2_id - 1] - vertex_data[triangle.indices.v0_id - 1]));
+                vertex_data[triangle.indices.v2_id - 1] - vertex_data[triangle.indices.v0_id - 1],
+                triangle.transformations,
+                triangle.texture_id
+                ));
 
             meshes.push_back(Mesh(std::move(triangles), triangle.material_id));
         }
@@ -90,7 +96,7 @@ namespace fst
         for (auto& sphere : parser.spheres)
         {
             spheres.push_back(Sphere(vertex_data[sphere.center_vertex_id - 1],
-                sphere.radius, sphere.material_id));
+                sphere.radius, sphere.material_id, sphere.transformations, sphere.texture_id));
         }
 
         background_color = math::Vector3f(parser.background_color.x, parser.background_color.y, parser.background_color.z);
@@ -120,7 +126,7 @@ namespace fst
                 hit_record = temp;
             }
         }
-
+        
         return min_distance != max_distance;
     }
 
@@ -128,6 +134,7 @@ namespace fst
     {
         for (auto& sphere : spheres)
         {
+            std::cout << sphere.transforms << std::endl; 
             if (sphere.intersectShadowRay(ray, max_distance))
             {
                 return true;
