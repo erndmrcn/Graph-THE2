@@ -56,6 +56,10 @@ namespace fst
         void sphere_translation(const Scaling matrix_t, Sphere sphere) const;
         
         /*    ********** texture mapping **********    */
+        void triangle_mapping();
+        void mesh_mapping();
+        void sphere_mapping();
+
         /*    ********** viewing transformations? **********    */
     };
 } // namespace fst
