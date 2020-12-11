@@ -13,7 +13,7 @@ namespace fst
 
     bool Triangle::intersect(const Ray& ray, HitRecord& hit_record, float max_distance) const
     {
-        //Mï¿½ller-Trumbore algorithm
+        //Möller-Trumbore algorithm
         auto pvec = math::cross(ray.get_direction(), m_edge2);
         auto inv_det = 1.0f / math::dot(m_edge1, pvec);
 
@@ -47,7 +47,7 @@ namespace fst
 
     bool Triangle::intersectShadowRay(const Ray& ray, float max_distance) const
     {
-        //Mï¿½ller-Trumbore algorithm
+        //Möller-Trumbore algorithm
         auto pvec = math::cross(ray.get_direction(), m_edge2);
         auto inv_det = 1.0f / math::dot(m_edge1, pvec);
 
@@ -69,10 +69,5 @@ namespace fst
 
         auto distance = math::dot(m_edge2, qvec) * inv_det;
         return distance > 0.0f && distance < max_distance;
-    }
-
-    void Triangle::scale(Triangle tri)
-    {
-        return;
     }
 }
